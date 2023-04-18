@@ -1,0 +1,30 @@
+mat-toolbar {
+  position: relative;
+  overflow: hidden;
+
+  mat-toolbar-row {
+    &.active {
+      width: 100%;
+    }
+    &:not(.active) {
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: 100% 50%;
+      overflow: hidden;
+    }
+  }
+}
+
+.search-block {
+  background: #fff;
+  position: absolute;
+  transition: width 0.33s ease-in;
+
+  .search-control {
+    flex: 1;
+    font-size: 1rem;
+    border: 0;
+    outline: none;
+    padding-left: 10px;
+  }
+}
