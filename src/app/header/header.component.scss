@@ -7,10 +7,10 @@ mat-toolbar {
       width: 100%;
     }
     &:not(.active) {
-      opacity: 0;
-      transform: scaleX(0);
-      transform-origin: 100% 50%;
+      opacity: .5;
       overflow: hidden;
+      left: 100%;
+      position: absolute;
     }
   }
 }
@@ -18,7 +18,7 @@ mat-toolbar {
 .search-block {
   background: #fff;
   position: absolute;
-  transition: width 0.33s ease-in;
+  transition: all 0.33s ease-in;
 
   .search-control {
     flex: 1;

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from "@angular/core";
+import { Component } from "@angular/core";
 import { gsap } from "gsap";
 
 @Component({
@@ -8,14 +8,18 @@ import { gsap } from "gsap";
 })
 export class HeaderComponent {
   searchText = "";
-  @ViewChild("searchbar") searchbar: ElementRef;
-  timeline: TimelineMax;
+  timeline: gsap.core.Timeline;
 
   ngOnInit() {
     this.timeline = gsap.timeline({ paused: true });
+    this.timeline.from(".search-block", {
+      left: "100%",
+      opacity: 0.5,
+    });
     this.timeline.to(".search-block", {
-      scaleX: "100%",
+      left: 0,
       opacity: 1,
+      duration: 0.33,
     });
     this.timeline.set(".search-block", {
       borderBottom: "1px solid black",
@@ -26,7 +30,7 @@ export class HeaderComponent {
 
   openSearch() {
     this.timeline.play().then(() => {
-      this.searchbar.nativeElement.focus();
+      document.getElementById("search-autocomplete")!.focus();
     });
   }
 

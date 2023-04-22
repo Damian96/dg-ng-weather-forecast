@@ -1,0 +1,18 @@
+<button class="search-icon" mat-icon-button disabled aria-disabled="true">
+  <mat-icon>search</mat-icon>
+</button>
+<mat-form-field>
+  <input
+    id="search-autocomplete"
+    autofocus="true"
+    matInput
+    placeholder="Search for a location"
+    [matAutocomplete]="auto"
+    [formControl]="locationControl"
+  />
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    <mat-option *ngFor="let location of filteredLocations$ | async" [value]="location">
+      {{ location.name }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
