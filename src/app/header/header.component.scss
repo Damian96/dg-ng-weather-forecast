@@ -6,12 +6,6 @@ mat-toolbar {
     &.active {
       width: 100%;
     }
-    &:not(.active) {
-      opacity: .5;
-      overflow: hidden;
-      left: 100%;
-      position: absolute;
-    }
   }
 }
 
@@ -19,12 +13,4 @@ mat-toolbar {
   background: #fff;
   position: absolute;
   transition: all 0.33s ease-in;
-
-  .search-control {
-    flex: 1;
-    font-size: 1rem;
-    border: 0;
-    outline: none;
-    padding-left: 10px;
-  }
 }

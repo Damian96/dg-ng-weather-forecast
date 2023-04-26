@@ -4,7 +4,7 @@
       <span class="me-auto col col-auto d-flex justify-content-center align-items-center">Weather-Forecast</span>
       <button
         class="col col-auto"
-        (click)="openSearch()"
+        (click)="toggleSearch()"
         mat-icon-button
         color="white"
         title="Search Location"
@@ -14,10 +14,13 @@
       </button>
     </div>
   </mat-toolbar-row>
-  <mat-toolbar-row class="mat-elevation-z4 search-block">
+  <mat-toolbar-row [@openClose]="isSearchOpen ? 'open' : 'closed'" class="mat-elevation-z4 search-block">
     <form class="row mx-0 w-100">
-      <app-weather-search></app-weather-search>
-      <button mat-icon-button (click)="closeSearch()" color="primary">
+      <button class="search-icon" mat-icon-button disabled aria-disabled="true">
+        <mat-icon>search</mat-icon>
+      </button>
+      <app-weather-search class="col flex-grow-1"></app-weather-search>
+      <button mat-icon-button (click)="toggleSearch()" color="primary">
         <mat-icon>close</mat-icon>
       </button>
     </form>
