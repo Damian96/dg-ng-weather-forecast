@@ -5,12 +5,43 @@
 <section class="container-fluid" *ngIf="currentWeather else notFound">
   <div class="row">
     <div class="col-12">
-      <h2>Current Conditions in {{ location.name }}</h2>
+      <h2>
+        <fa-icon [icon]="faMapPin" [style]="{color: 'red'}"></fa-icon>
+        <span matTooltip="{{ localTimeTooltip }}" matTooltipPosition="above">
+          Weather in: <u>{{ location.name }}</u>
+          <fa-icon [icon]="faInfoCircle" [style]="{color: 'blue'}" class="ms-2"></fa-icon>
+        </span>
+      </h2>
     </div>
   </div>
-  <div class="row">
-    <div class="col col-auto">
-      Temperature in Celcius: {{ currentWeather.temp_c }}
+  <div class="row info-container">
+    <div class="col col-auto col-info">
+      <div class="d-flex flex-row flex-wrap justify-content-center align-items-center col-info__flex">
+        <span>{{ currentWeather.condition.text }}</span>
+        <img src="{{ currentWeather.condition.icon }}" alt="condition icon" />
+      </div>
+    </div>
+    <div class="col col-auto col-info">
+      <div class="d-flex flex-row flex-wrap justify-content-center align-items-center col-info__flex">
+        <fa-icon [icon]="faTemperatureThreeQuarters" size="3x" [style]="{color: 'crimson'}"></fa-icon>
+        <div class="ps-1 text-center">
+          <span>Temperature: <span class="temp">{{ currentWeather.temp_c }}℃</span><br /></span>
+          <span>Feels like: <span class="temp">{{ currentWeather.feelslike_c }}℃</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="col col-auto col-info">
+      <div class="d-flex flex-row flex-wrap justify-content-center align-items-center col-info__flex">
+        <fa-icon [icon]="faDroplet" size="3x" [style]="{color: 'steelblue'}"></fa-icon>
+        <span class="ps-2 text-end">Humidity: <span class="temp">{{ currentWeather.humidity }}&percnt;</span></span>
+      </div>
+    </div>
+    <div class="col col-auto col-info">
+      <div class="d-flex flex-row flex-wrap justify-content-center align-items-center col-info__flex">
+        <fa-icon [icon]="faWind" size="3x" [style]="{color: 'darkgray'}"></fa-icon>
+        <span class="ps-2 me-2 text-end">Wind: <span class="temp">{{ currentWeather.humidity }} km/h</span></span>
+        <fa-icon [icon]="faArrowUp" size="2x" transform="rotate-{{currentWeather.wind_degree}}"></fa-icon>
+      </div>
     </div>
   </div>
 </section>

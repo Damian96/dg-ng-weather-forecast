@@ -9,8 +9,9 @@ import { HttpClientModule, HttpClientJsonpModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CurrentWeatherComponent } from "./current-weather/current-weather.component";
 import { ForecastWeatherComponent } from "./forecast-weather/forecast-weather.component";
-import { hmrModule } from "@angularclass/hmr";
 import { WeatherSearchComponent } from './header/weather-search/weather-search.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, CurrentWeatherComponent, ForecastWeatherComponent, WeatherSearchComponent],
@@ -21,9 +22,11 @@ import { WeatherSearchComponent } from './header/weather-search/weather-search.c
     BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HttpClientJsonpModule
+    HttpClientJsonpModule,
+    FontAwesomeModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

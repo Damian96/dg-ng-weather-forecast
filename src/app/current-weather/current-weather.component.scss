@@ -1,0 +1,25 @@
+.info-container {
+  .col-info {
+
+    &:not(:last-child) {
+      border-right: 1px solid #ddd;
+    }
+
+    &__flex {}
+
+    fa-icon,
+    img {
+      min-height: calc(min(15vh, 60px));
+    }
+
+    fa-icon {
+      padding-top: calc(min(15vh, 60px) / 6);
+
+    }
+  }
+}
+
+span.temp {
+  font-size: 1.2em;
+  font-weight: 500;
+}

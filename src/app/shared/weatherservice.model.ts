@@ -10,8 +10,14 @@ export interface LocationInterface {
   url: string;
 }
 
+export interface LocationForecast extends LocationInterface {
+  tz_id: string;
+  localtime_epoch: number;
+  localtime: string;
+}
+
 export interface ForecastResponse {
-  location: Location;
+  location: LocationForecast;
   current: Current;
   forecast: Forecast;
 }

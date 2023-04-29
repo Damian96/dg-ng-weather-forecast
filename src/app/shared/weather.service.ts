@@ -12,7 +12,7 @@ export class WeatherService {
   q: string;
   private _key: string;
   lastLocation$: BehaviorSubject<Location>;
-  selectedLocation$: Observable<Location>;
+  selectedLocation$: Observable<any>;
 
   constructor(private http: HttpClient) {
     this.rootUrl = process.env['WEATHER_API_BASEURL']!.toString();
