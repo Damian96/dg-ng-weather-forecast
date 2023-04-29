@@ -1,7 +1,16 @@
-<section class="container-fluid">
+<ng-template #notFound>
+  <h1 class="text-center">The location you entered was not found!</h1>
+</ng-template>
+
+<section class="container-fluid" *ngIf="currentWeather else notFound">
   <div class="row">
     <div class="col-12">
-
+      <h2>Current Conditions in {{ location.name }}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-auto">
+      Temperature in Celcius: {{ currentWeather.temp_c }}
     </div>
   </div>
 </section>

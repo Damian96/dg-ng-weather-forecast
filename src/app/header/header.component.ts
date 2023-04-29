@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component } from "@angular/core";
+import { boundMethod } from "autobind-decorator";
 
 @Component({
   selector: "app-header",
@@ -27,10 +28,20 @@ import { Component } from "@angular/core";
   ],
 })
 export class HeaderComponent {
-  searchText = "";
   isSearchOpen: boolean = false;
+
+  ngOnInit() {
+    window.addEventListener("keydown", this.onKeyDownHandler);
+  }
 
   toggleSearch() {
     this.isSearchOpen = !this.isSearchOpen;
+  }
+
+  @boundMethod
+  onKeyDownHandler(e: KeyboardEvent) {
+    if (e.ctrlKey && e.shiftKey && e.code == "KeyF") {
+      this.toggleSearch();
+    }
   }
 }

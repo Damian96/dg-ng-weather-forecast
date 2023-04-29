@@ -1,8 +1,13 @@
 import { Component } from "@angular/core";
 import { FormControl } from "@angular/forms";
+import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { Observable } from "rxjs";
-import { debounceTime, distinctUntilChanged, switchMap } from "rxjs/operators";
-import { Location } from "src/app/shared/location.model";
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+} from "rxjs/operators";
+import { Location } from "src/app/shared/weatherservice.model";
 import { WeatherService } from "src/app/shared/weather.service";
 
 @Component({
@@ -14,7 +19,8 @@ export class WeatherSearchComponent {
   locations: Location[] = [];
   filteredLocations$: Observable<Location[]>;
 
-  constructor(private weatherService: WeatherService) {}
+  constructor(private weatherService: WeatherService) {
+  }
 
   ngOnInit() {
     this.filteredLocations$ = this.locationControl.valueChanges.pipe(
@@ -32,5 +38,9 @@ export class WeatherSearchComponent {
     this.weatherService.searchLocation(q).subscribe((locations) => {
       this.locations = locations;
     });
+  }
+
+  onOptionSelectedHandler(event: MatAutocompleteSelectedEvent) {
+    this.weatherService.addSelectedLocation(event.option.value);
   }
 }

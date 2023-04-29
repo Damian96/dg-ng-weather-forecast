@@ -1,6 +1,8 @@
 mat-toolbar {
   position: relative;
-  overflow: hidden;
+  /* Clip Margin fixes overflow-hidden bug */
+  overflow: clip;
+  overflow-clip-margin: 0;
 
   mat-toolbar-row {
     &.active {

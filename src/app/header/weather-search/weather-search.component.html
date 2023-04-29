@@ -1,14 +1,8 @@
 <mat-form-field class="d-flex w-100">
-  <input
-    id="search-autocomplete"
-    autofocus="true"
-    matInput
-    class="search-control"
-    placeholder="Search for a location"
-    [matAutocomplete]="auto"
-    [formControl]="locationControl"
-  />
-  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+  <input id="search-autocomplete" autofocus="true" matInput class="search-control" placeholder="Search for a location"
+    [matAutocomplete]="auto" [formControl]="locationControl" />
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn"
+    (optionSelected)="onOptionSelectedHandler($event)">
     <mat-option *ngFor="let location of filteredLocations$ | async" [value]="location">
       {{ location.name }}
     </mat-option>

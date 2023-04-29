@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
     "@ng-bootstrap/ng-bootstrap": "^14.1.0",
+    "autobind-decorator": "^2.4.0",
     "bootstrap": "^5.2.3",
     "dotenv": "^16.0.3",
     "gsap": "^3.11.5",
