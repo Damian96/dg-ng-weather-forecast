@@ -1,46 +1,71 @@
-import { Component } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { FormControl, Validators } from "@angular/forms";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import {
   debounceTime,
   distinctUntilChanged,
-  switchMap,
+  map,
+  tap,
 } from "rxjs/operators";
-import { Location } from "src/app/shared/weatherservice.model";
+import { City, suggestedCities } from "src/app/shared/models/greek-cities.model";
+import { ForecastResponse } from "src/app/shared/models/weatherservice.model";
 import { WeatherService } from "src/app/shared/weather.service";
 
 @Component({
   selector: "app-weather-search",
   templateUrl: "./weather-search.component.html",
 })
-export class WeatherSearchComponent {
-  locationControl = new FormControl();
-  locations: Location[] = [];
-  filteredLocations$: Observable<Location[]>;
+export class WeatherSearchComponent implements OnInit, OnDestroy {
+  locationControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(/[A-Z][a-z]/i),
+    Validators.minLength(3)
+  ]);
+  filteredLocations$: Observable<City[]>;
+  searchLocSub: Subscription;
 
   constructor(private weatherService: WeatherService) {
   }
 
   ngOnInit() {
     this.filteredLocations$ = this.locationControl.valueChanges.pipe(
-      debounceTime(300),
+      tap(() => {
+        this.weatherService.searchValueChanged.next(true);
+      }),
+      debounceTime(500),
       distinctUntilChanged(),
-      switchMap((q) => this.weatherService.searchLocation(q))
+      map((value) => {
+        return this.filterGreekCities(value)
+      })
     );
   }
 
-  displayFn(location: Location): string {
-    return location && location.name ? location.name : "";
-  }
-
-  searchLocation(q: string): void {
-    this.weatherService.searchLocation(q).subscribe((locations) => {
-      this.locations = locations;
+  filterGreekCities(value: any): City[] {
+    return suggestedCities.filter((city: City) => {
+      if (value && typeof value === 'string') {
+        return city.name.toLowerCase().includes(value.trim().toLowerCase());
+      } else {
+        return false;
+      }
     });
   }
 
+  displayFn(location: City): string {
+    return location && location.name ? location.name : "";
+  }
+
   onOptionSelectedHandler(event: MatAutocompleteSelectedEvent) {
-    this.weatherService.addSelectedLocation(event.option.value);
+    let selectedCity: City = event.option.value;
+    this.searchLocSub = this.weatherService.getForecastObject(1, undefined, selectedCity)
+      .subscribe((fResponse: ForecastResponse) => {
+        this.weatherService.addSelectedLocation(fResponse.location);
+        this.weatherService.selectedForecast.next(fResponse);
+        this.weatherService.searchValueChanged.next(false);
+      });
+  }
+
+  ngOnDestroy() {
+    this.searchLocSub.unsubscribe();
   }
 }

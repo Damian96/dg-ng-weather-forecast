@@ -1,20 +1,22 @@
-import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-
 import { AppComponent } from "./app.component";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HeaderComponent } from "./header/header.component";
-import { MaterialModule } from "./material/material.module";
-import { HttpClientModule, HttpClientJsonpModule } from "@angular/common/http";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CurrentWeatherComponent } from "./current-weather/current-weather.component";
 import { ForecastWeatherComponent } from "./forecast-weather/forecast-weather.component";
 import { WeatherSearchComponent } from './header/weather-search/weather-search.component';
+import { LoadingSpinnerComponent } from "./shared/loading-spinner/loading-spinner.component";
+
+/* MODULES */
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MaterialModule } from "./material/material.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { HttpClientModule, HttpClientJsonpModule } from "@angular/common/http";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, CurrentWeatherComponent, ForecastWeatherComponent, WeatherSearchComponent],
+  declarations: [AppComponent, HeaderComponent, CurrentWeatherComponent, ForecastWeatherComponent, WeatherSearchComponent, LoadingSpinnerComponent],
   imports: [
     BrowserModule,
     MaterialModule,

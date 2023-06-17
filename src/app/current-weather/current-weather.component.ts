@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WeatherService } from "../shared/weather.service";
-import { Current as CurrentWeather, ForecastResponse, LocationForecast } from "../shared/weatherservice.model";
+import { Current as CurrentWeather, ForecastResponse, Location, LocationForecast } from "../shared/models/weatherservice.model";
 import { faTemperatureThreeQuarters, faDroplet, faWind, faArrowUp, faMapPin, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FormControl } from '@angular/forms';
 import { TooltipPosition } from '@angular/material/tooltip';
@@ -11,7 +11,8 @@ import { TooltipPosition } from '@angular/material/tooltip';
   templateUrl: './current-weather.component.html',
   styleUrls: ['./current-weather.component.scss']
 })
-export class CurrentWeatherComponent {
+export class CurrentWeatherComponent implements OnInit {
+  loading: boolean = true;
   currentWeather: CurrentWeather;
   location: LocationForecast;
   localTimeTooltip: string;
@@ -32,17 +33,14 @@ export class CurrentWeatherComponent {
   }
 
   ngOnInit() {
-    this.weatherService.selectedLocation$.subscribe((loc: LocationForecast) => {
-      this.weatherService.getForecastObject(loc, 2).subscribe(
-        (response: ForecastResponse) => {
-          this.currentWeather = response.current;
-          this.location = response.location;
-          this.localTimeTooltip = 'Current time is: ' + this.location.localtime;
-        }
-      )
-    })
-  }
+    this.weatherService.selectedForecast.subscribe((response: ForecastResponse) => {
+      this.currentWeather = response.current;
+      this.location = response.location;
+      this.localTimeTooltip = 'Current time is: ' + this.location.localtime;
+    });
 
-  ngAfterViewInit() {
+    this.weatherService.searchValueChanged.subscribe((searching: boolean) => {
+      this.loading = searching;
+    });
   }
 }

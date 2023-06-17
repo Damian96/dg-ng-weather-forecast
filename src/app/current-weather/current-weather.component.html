@@ -1,8 +1,8 @@
-<ng-template #notFound>
+<ng-template #notFound [ngIf]="!loading && !currentWeather">
   <h1 class="text-center">The location you entered was not found!</h1>
 </ng-template>
 
-<section class="container-fluid" *ngIf="currentWeather else notFound">
+<section class="container-fluid" *ngIf="!loading && currentWeather">
   <div class="row">
     <div class="col-12">
       <h2>
@@ -45,3 +45,5 @@
     </div>
   </div>
 </section>
+
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>

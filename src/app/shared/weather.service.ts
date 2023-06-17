@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import * as dotenv from 'dotenv'; // required for process.env
-import { Observable, BehaviorSubject, catchError, retry, throwError } from 'rxjs';
-import { ForecastResponse, Location } from './weatherservice.model';
+import { Observable, BehaviorSubject, catchError, retry, throwError, Subject } from 'rxjs';
+import { ForecastResponse, Location } from './models/weatherservice.model';
+import { City } from "./models/greek-cities.model";
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,13 @@ export class WeatherService {
   rootUrl: string;
   q: string;
   private _key: string;
+
   lastLocation$: BehaviorSubject<Location>;
+
   selectedLocation$: Observable<any>;
+  selectedForecast: Subject<ForecastResponse> = new Subject<ForecastResponse>();
+
+  searchValueChanged: Subject<boolean> = new Subject<boolean>();
 
   constructor(private http: HttpClient) {
     this.rootUrl = process.env['WEATHER_API_BASEURL']!.toString();
@@ -29,11 +35,18 @@ export class WeatherService {
     this.selectedLocation$ = this.lastLocation$.asObservable();
   }
 
-  getForecastObject(location: Location, days: number): Observable<ForecastResponse> {
+  getForecastObject(...args: [days: number, location?: Location, city?: City]): Observable<ForecastResponse> {
+    let q = '';
+    console.log(args);
+    if (args[1]) {
+      q = args[1].name;
+    } else if (args[2]) {
+      q = args[2].name;
+    }
+
     return this.http
       .get<ForecastResponse>(
-        `${this.rootUrl}/forecast.json?key=${this._key}&aqi=no&alerts=no&q=${location.lat + ',' + location.lon
-        }`
+        `${this.rootUrl}/forecast.json?key=${this._key}&aqi=no&alerts=no&q=${q}`
       )
       .pipe(retry(1), catchError(this.handleError));
   }
@@ -41,7 +54,7 @@ export class WeatherService {
   searchLocation(q: string): Observable<Location[]> {
     return this.http
       .get<Location[]>(`${this.rootUrl}/search.json?key=${this._key}&q=${q}`)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
