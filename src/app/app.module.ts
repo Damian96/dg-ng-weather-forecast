@@ -14,9 +14,10 @@ import { MaterialModule } from "./material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HttpClientJsonpModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, CurrentWeatherComponent, ForecastWeatherComponent, WeatherSearchComponent, LoadingSpinnerComponent],
+  declarations: [AppComponent, HeaderComponent, CurrentWeatherComponent, ForecastWeatherComponent, WeatherSearchComponent, LoadingSpinnerComponent, FooterComponent],
   imports: [
     BrowserModule,
     MaterialModule,

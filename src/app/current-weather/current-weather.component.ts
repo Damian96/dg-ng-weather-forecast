@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { WeatherService } from "../shared/weather.service";
 import { Current as CurrentWeather, ForecastResponse, Location, LocationForecast } from "../shared/models/weatherservice.model";
 import { faTemperatureThreeQuarters, faDroplet, faWind, faArrowUp, faMapPin, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
@@ -11,8 +11,8 @@ import { TooltipPosition } from '@angular/material/tooltip';
   templateUrl: './current-weather.component.html',
   styleUrls: ['./current-weather.component.scss']
 })
-export class CurrentWeatherComponent implements OnInit {
-  loading: boolean = true;
+export class CurrentWeatherComponent implements OnInit, OnDestroy {
+  loading: boolean = false;
   currentWeather: CurrentWeather;
   location: LocationForecast;
   localTimeTooltip: string;
@@ -42,5 +42,10 @@ export class CurrentWeatherComponent implements OnInit {
     this.weatherService.searchValueChanged.subscribe((searching: boolean) => {
       this.loading = searching;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.weatherService.selectedForecast.unsubscribe();
+    this.weatherService.searchValueChanged.unsubscribe();
   }
 }

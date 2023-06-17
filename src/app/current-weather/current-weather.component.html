@@ -1,6 +1,6 @@
-<ng-template #notFound [ngIf]="!loading && !currentWeather">
+<!-- <ng-template #notFound [ngIf]="location!currentWeather">
   <h1 class="text-center">The location you entered was not found!</h1>
-</ng-template>
+</ng-template> -->
 
 <section class="container-fluid" *ngIf="!loading && currentWeather">
   <div class="row">
@@ -47,3 +47,10 @@
 </section>
 
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+<section class="container-fluid" *ngIf="!loading && !currentWeather">
+  <div class="row">
+    <h1 class="text-center lead">Please select a location from the search button in the upper right corner. <br/>
+      For now, only Greek Cities are allowed as input.</h1>
+  </div>
+</section>

@@ -30,8 +30,10 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.filteredLocations$ = this.locationControl.valueChanges.pipe(
-      tap(() => {
-        this.weatherService.searchValueChanged.next(true);
+      tap((value) => {
+        if (value && value.length > 3) {
+          this.weatherService.searchValueChanged.next(true);
+        }
       }),
       debounceTime(500),
       distinctUntilChanged(),

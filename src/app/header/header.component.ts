@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { boundMethod } from "autobind-decorator";
+import { WeatherService } from "../shared/weather.service";
 
 @Component({
   selector: "app-header",
@@ -27,11 +28,17 @@ import { boundMethod } from "autobind-decorator";
     ]),
   ],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   isSearchOpen: boolean = false;
+
+  constructor(private weatherService: WeatherService) { }
 
   ngOnInit() {
     window.addEventListener("keydown", this.onKeyDownHandler);
+
+    this.weatherService.selectedForecast.subscribe(() => {
+      this.isSearchOpen = false;
+    })
   }
 
   toggleSearch() {
@@ -43,5 +50,9 @@ export class HeaderComponent {
     if (e.ctrlKey && e.shiftKey && e.code == "KeyF") {
       this.toggleSearch();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.weatherService.selectedForecast.unsubscribe();
   }
 }
