@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import * as dotenv from 'dotenv'; // required for process.env
+import { environment } from "src/environments/environment";
 import { Observable, BehaviorSubject, catchError, retry, throwError, Subject } from 'rxjs';
 import { ForecastResponse, Location } from './models/weatherservice.model';
 import { City } from "./models/greek-cities.model";
@@ -21,8 +21,8 @@ export class WeatherService {
   searchValueChanged: Subject<boolean> = new Subject<boolean>();
 
   constructor(private http: HttpClient) {
-    this.rootUrl = process.env['WEATHER_API_BASEURL']!.toString();
-    this._key = process.env['WEATHER_API_KEY']!.toString();
+    this.rootUrl = environment.WEATHER_API_BASEURL.toString();
+    this._key = environment.WEATHER_API_KEY.toString();
     this.lastLocation$ = new BehaviorSubject<Location>({
       "id": 2862396,
       "name": "Athens",
