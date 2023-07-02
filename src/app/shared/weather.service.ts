@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { environment } from "src/environments/environment";
 import { Observable, BehaviorSubject, catchError, retry, throwError, Subject } from 'rxjs';
+
 import { ForecastResponse, Location } from './models/weatherservice.model';
 import { City } from "./models/greek-cities.model";
+
+import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +21,7 @@ export class WeatherService {
   selectedForecast: Subject<ForecastResponse> = new Subject<ForecastResponse>();
 
   searchValueChanged: Subject<boolean> = new Subject<boolean>();
-  autoCompleteNotFound : Subject<boolean> = new Subject<boolean>();
+  autoCompleteNotFound: Subject<boolean> = new Subject<boolean>();
 
   constructor(private http: HttpClient) {
     this.rootUrl = environment.WEATHER_API_BASEURL.toString();
