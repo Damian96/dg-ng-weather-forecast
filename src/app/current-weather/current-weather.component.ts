@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { WeatherService } from "../shared/weather.service";
-import { Current as CurrentWeather, ForecastResponse, Location, LocationForecast } from "../shared/models/weatherservice.model";
+import { Current as CurrentWeather, ForecastResponse, LocationForecast, WeatherLocation } from "../shared/models/weatherservice.model";
 import { faTemperatureThreeQuarters, faDroplet, faWind, faArrowUp, faMapPin, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FormControl } from '@angular/forms';
 import { TooltipPosition } from '@angular/material/tooltip';
-
 
 @Component({
   selector: 'app-current-weather',
@@ -16,6 +15,7 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
   currentWeather: CurrentWeather;
   location: LocationForecast;
   localTimeTooltip: string;
+  inputNotFound: boolean;
 
   /* FontAwesome */
   faTemperatureThreeQuarters = faTemperatureThreeQuarters;
@@ -42,10 +42,15 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
     this.weatherService.searchValueChanged.subscribe((searching: boolean) => {
       this.loading = searching;
     });
+
+    this.weatherService.autoCompleteNotFound.subscribe((notFound: boolean) => {
+      this.inputNotFound = notFound;
+    });
   }
 
   ngOnDestroy(): void {
     this.weatherService.selectedForecast.unsubscribe();
     this.weatherService.searchValueChanged.unsubscribe();
+    this.weatherService.autoCompleteNotFound.unsubscribe();
   }
 }

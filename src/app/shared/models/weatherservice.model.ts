@@ -135,3 +135,15 @@ export interface Hour {
   gust_kph: number;
   uv: number;
 }
+
+export class WeatherLocation implements LocationInterface {
+  id: number = 2863472;
+  name: string = "Thessaloniki";
+  region: string = "Central Macedonia";
+  country: string = "Greece";
+  lat: number = 40.64;
+  lon: number = 22.93;
+  url: string = "thessaloniki-central-macedonia-greece";
+
+  constructor() { }
+}

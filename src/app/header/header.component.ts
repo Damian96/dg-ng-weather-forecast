@@ -43,6 +43,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   toggleSearch() {
     this.isSearchOpen = !this.isSearchOpen;
+
+    if (!this.isSearchOpen) {
+      this.weatherService.searchValueChanged.next(false);
+      this.weatherService.autoCompleteNotFound.next(false);
+    }
   }
 
   @boundMethod

@@ -19,6 +19,7 @@ export class WeatherService {
   selectedForecast: Subject<ForecastResponse> = new Subject<ForecastResponse>();
 
   searchValueChanged: Subject<boolean> = new Subject<boolean>();
+  autoCompleteNotFound : Subject<boolean> = new Subject<boolean>();
 
   constructor(private http: HttpClient) {
     this.rootUrl = environment.WEATHER_API_BASEURL.toString();

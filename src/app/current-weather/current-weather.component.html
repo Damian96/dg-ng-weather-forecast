@@ -1,6 +1,6 @@
-<!-- <ng-template #notFound [ngIf]="location!currentWeather">
+<ng-template #notFound [ngIf]="inputNotFound">
   <h1 class="text-center">The location you entered was not found!</h1>
-</ng-template> -->
+</ng-template>
 
 <section class="container-fluid" *ngIf="!loading && currentWeather">
   <div class="row">
@@ -46,7 +46,7 @@
   </div>
 </section>
 
-<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<app-loading-spinner *ngIf="loading && !inputNotFound"></app-loading-spinner>
 
 <section class="container-fluid" *ngIf="!loading && !currentWeather">
   <div class="row">
