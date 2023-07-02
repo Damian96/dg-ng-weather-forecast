@@ -5,7 +5,7 @@ import { Observable, BehaviorSubject, catchError, retry, throwError, Subject } f
 import { ForecastResponse, Location } from './models/weatherservice.model';
 import { City } from "./models/greek-cities.model";
 
-import { environment } from "src/environments/environment";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root',
