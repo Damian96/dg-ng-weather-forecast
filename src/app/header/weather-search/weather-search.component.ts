@@ -44,6 +44,12 @@ export class WeatherSearchComponent implements OnInit, OnDestroy {
   }
 
   filterGreekCities(value: any): City[] {
+    if (typeof value === 'object' && value.hasOwnProperty('name')) {
+      // Guard: city has been found and selected
+      this.weatherService.autoCompleteNotFound.next(false);
+      return [];
+    }
+
     let filteredCities = suggestedCities.filter((city: City) => {
       if (value && typeof value === 'string') {
         return city.name.toLowerCase().includes(value.trim().toLowerCase());

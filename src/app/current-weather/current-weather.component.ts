@@ -37,6 +37,7 @@ export class CurrentWeatherComponent implements OnInit, OnDestroy {
       this.currentWeather = response.current;
       this.location = response.location;
       this.localTimeTooltip = 'Current time is: ' + this.location.localtime;
+      this.inputNotFound = false;
     });
 
     this.weatherService.searchValueChanged.subscribe((searching: boolean) => {
