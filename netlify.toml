@@ -1,3 +1,4 @@
 [[redirects]]
-  from = "http://api.weatherapi.com/v1"
-  to = "/api"
+  from = "/api/*"
+  to = "http://api.weatherapi.com/v1/:splat"
+  status = 200
